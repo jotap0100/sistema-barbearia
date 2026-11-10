@@ -1,8 +1,3 @@
--- ========================================================
--- BANCO DE DADOS: SISTEMA BARBEARIA (DOM NAVALHA)
--- ========================================================
-
--- Tabela de Clientes
 CREATE TABLE IF NOT EXISTS clientes (
     id SERIAL PRIMARY KEY NOT NULL,
     nome VARCHAR(100) NOT NULL,
@@ -13,7 +8,6 @@ CREATE TABLE IF NOT EXISTS clientes (
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de Barbeiros
 CREATE TABLE IF NOT EXISTS barbeiros (
     id SERIAL PRIMARY KEY NOT NULL,
     nome VARCHAR(100) NOT NULL,
@@ -25,7 +19,6 @@ CREATE TABLE IF NOT EXISTS barbeiros (
     ativo BOOLEAN DEFAULT TRUE
 );
 
--- Tabela de Serviços
 CREATE TABLE IF NOT EXISTS servicos (
     id SERIAL PRIMARY KEY NOT NULL,
     nome VARCHAR(100) NOT NULL,
@@ -35,7 +28,6 @@ CREATE TABLE IF NOT EXISTS servicos (
     ativo BOOLEAN DEFAULT TRUE
 );
 
--- Tabela de Agendamentos / Reservas
 CREATE TABLE IF NOT EXISTS agendamentos (
     id SERIAL PRIMARY KEY NOT NULL,
     codigo VARCHAR(20) UNIQUE,
@@ -52,7 +44,6 @@ CREATE TABLE IF NOT EXISTS agendamentos (
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Inserção de Barbeiros Iniciais
 INSERT INTO barbeiros (nome, especialidade, telefone) VALUES 
 ('Carlos "Navalha" Silva', 'Master Barber & Fade', '(11) 99111-2222'),
 ('Rafael Mendes', 'Barboterapia & Visagismo', '(11) 99222-3333'),
@@ -60,7 +51,6 @@ INSERT INTO barbeiros (nome, especialidade, telefone) VALUES
 ('André Santos', 'Cortes Clássicos na Tesoura', '(11) 99444-5555')
 ON CONFLICT DO NOTHING;
 
--- Inserção de Serviços Iniciais
 INSERT INTO servicos (nome, preco, duracao_minutos) VALUES 
 ('Corte Clássico / Fade', 45.00, 40),
 ('Barba Terapia Completa', 40.00, 35),

@@ -1,8 +1,3 @@
-/* ==========================================================================
-   BARBEARIA DOM NAVALHA - DESIGN SYSTEM & ESTILOS PRINCIPAIS
-   Paleta: Dark Luxury + Ouro Vintage + Tipografia Sofisticada
-   ========================================================================== */
-
 :root {
     --bg-main: #0c0d11;
     --bg-surface: #14161f;
@@ -37,7 +32,6 @@
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* RESET E BASE */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -89,9 +83,6 @@ button, input, select, textarea {
     color: var(--gold) !important;
 }
 
-/* ==========================================================================
-   TIPOGRAFIA & CABEÇALHOS DE SEÇÃO
-   ========================================================================== */
 .section {
     padding: 100px 0;
     position: relative;
@@ -130,9 +121,6 @@ button, input, select, textarea {
     font-size: 1.05rem;
 }
 
-/* ==========================================================================
-   BOTÕES & COMPONENTES GERAIS
-   ========================================================================== */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -197,9 +185,6 @@ button, input, select, textarea {
     border-radius: var(--radius-md);
 }
 
-/* ==========================================================================
-   NAVBAR
-   ========================================================================== */
 .navbar {
     position: fixed;
     top: 0;
@@ -308,9 +293,6 @@ button, input, select, textarea {
     cursor: pointer;
 }
 
-/* ==========================================================================
-   HERO SECTION
-   ========================================================================== */
 .hero {
     position: relative;
     min-height: 100vh;
@@ -424,9 +406,6 @@ button, input, select, textarea {
     background: var(--border);
 }
 
-/* ==========================================================================
-   DIFERENCIAIS (FEATURES)
-   ========================================================================== */
 .features {
     padding: 40px 0 80px;
     position: relative;
@@ -497,9 +476,6 @@ button, input, select, textarea {
     line-height: 1.6;
 }
 
-/* ==========================================================================
-   EQUIPE / BARBEIROS
-   ========================================================================== */
 .team-section {
     background: var(--bg-surface);
 }
@@ -599,9 +575,6 @@ button, input, select, textarea {
     color: var(--text-muted);
 }
 
-/* ==========================================================================
-   TABELA DE PREÇOS & SERVIÇOS
-   ========================================================================== */
 .pricing-section {
     background: var(--bg-main);
 }
@@ -713,9 +686,6 @@ button, input, select, textarea {
     margin-bottom: 12px;
 }
 
-/* ==========================================================================
-   SISTEMA DE AGENDAMENTO (RESERVA)
-   ========================================================================== */
 .booking-section {
     background: var(--bg-surface);
 }
@@ -830,7 +800,6 @@ button, input, select, textarea {
     font-family: var(--font-heading);
 }
 
-/* FORMULÁRIO */
 .booking-form {
     background: rgba(16, 18, 26, 0.85);
     border: 1px solid var(--border);
@@ -892,7 +861,6 @@ select.form-control option {
     color: var(--text-white);
 }
 
-/* GRID DE HORÁRIOS DISPONÍVEIS */
 .time-slots-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
@@ -944,9 +912,6 @@ select.form-control option {
     gap: 6px;
 }
 
-/* ==========================================================================
-   LOCALIZAÇÃO & HORÁRIOS
-   ========================================================================== */
 .location-section {
     background: var(--bg-main);
 }
@@ -1035,9 +1000,6 @@ select.form-control option {
     filter: invert(90%) hue-rotate(180deg) contrast(95%);
 }
 
-/* ==========================================================================
-   FAQ & CONTATO DIRETO
-   ========================================================================== */
 .faq-section {
     background: var(--bg-surface);
 }
@@ -1125,9 +1087,6 @@ select.form-control option {
     font-size: 0.95rem;
 }
 
-/* ==========================================================================
-   RODAPÉ (FOOTER)
-   ========================================================================== */
 .footer {
     background: #08090b;
     border-top: 1px solid var(--border);
@@ -1220,9 +1179,6 @@ select.form-control option {
     align-items: center;
 }
 
-/* ==========================================================================
-   MODAL DE SUCESSO
-   ========================================================================== */
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -1318,9 +1274,6 @@ select.form-control option {
     gap: 12px;
 }
 
-/* ==========================================================================
-   BOTÃO FLUTUANTE DO WHATSAPP & TOAST
-   ========================================================================== */
 .floating-whatsapp {
     position: fixed;
     bottom: 28px;
@@ -1396,9 +1349,6 @@ select.form-control option {
     transform: translateX(-50%) translateY(0);
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE (MOBILE & TABLET)
-   ========================================================================== */
 @media (max-width: 992px) {
     .hero-title {
         font-size: 2.8rem;
@@ -1494,4 +1444,3 @@ select.form-control option {
         text-align: center;
     }
 }
-

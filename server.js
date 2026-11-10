@@ -8,12 +8,10 @@ const PORT = 3000
 
 app.use(express.json())
 app.use(cors())
-app.use(express.static('front')) // Serve os arquivos HTML, CSS, JS da pasta front
+app.use(express.static('front'))
 
-// Memória temporária para armazenar agendamentos caso o banco não esteja rodando
 const agendamentos = []
 
-// Rota para criar agendamento
 app.post('/api/agendamentos', async (req, res) => {
     try {
         const { codigo, cliente, telefone, email, servico, barbeiro, data, hora, valor, observacoes } = req.body
@@ -33,7 +31,6 @@ app.post('/api/agendamentos', async (req, res) => {
             criadoEm: new Date().toISOString()
         }
 
-        // Tenta salvar no PostgreSQL se a tabela existir
         try {
             await pool.query(
                 `INSERT INTO agendamentos (codigo, cliente, telefone, email, servico, barbeiro, data, hora, valor, observacoes) 
@@ -41,8 +38,6 @@ app.post('/api/agendamentos', async (req, res) => {
                 [novoAgendamento.codigo, cliente, telefone, email, servico, barbeiro, data, hora, valor, observacoes]
             )
         } catch (dbError) {
-            // Se a tabela ou conexão do banco ainda não estiverem prontas, continua sem travar
-            // console.log("Aviso: banco local não conectado, salvando na memória da sessão.")
         }
 
         agendamentos.push(novoAgendamento)
@@ -59,7 +54,6 @@ app.post('/api/agendamentos', async (req, res) => {
     }
 })
 
-// Rota para listar agendamentos
 app.get('/api/agendamentos', async (req, res) => {
     try {
         res.json({ sucesso: true, agendamentos })

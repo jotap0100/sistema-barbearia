@@ -1,8 +1,3 @@
-/**
- * BARBEARIA DOM NAVALHA - FRONT-END CONTROLLER
- * Gerencia interações da UI, agendamento dinâmico, WhatsApp e FAQ.
- */
-
 document.addEventListener("DOMContentLoaded", () => {
     initNavbar();
     initDatePicker();
@@ -12,16 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     initBookingForm();
 });
 
-/* ==========================================================================
-   1. NAVBAR & SCROLL
-   ========================================================================== */
 function initNavbar() {
     const navbar = document.getElementById("navbar");
     const menuToggle = document.getElementById("menu-toggle");
     const navMenu = document.getElementById("nav-menu");
     const navLinks = document.querySelectorAll(".nav-link");
 
-    // Fixar fundo da navbar no scroll
     window.addEventListener("scroll", () => {
         if (window.scrollY > 50) {
             navbar.classList.add("scrolled");
@@ -30,7 +21,6 @@ function initNavbar() {
         }
     });
 
-    // Abrir/Fechar menu mobile
     if (menuToggle && navMenu) {
         menuToggle.addEventListener("click", () => {
             navMenu.classList.toggle("open");
@@ -44,7 +34,6 @@ function initNavbar() {
             }
         });
 
-        // Fechar ao clicar em qualquer link
         navLinks.forEach(link => {
             link.addEventListener("click", () => {
                 navMenu.classList.remove("open");
@@ -58,14 +47,10 @@ function initNavbar() {
     }
 }
 
-/* ==========================================================================
-   2. CONFIGURAÇÃO DE DATA (DATEPICKER)
-   ========================================================================== */
 function initDatePicker() {
     const dateInput = document.getElementById("booking-date");
     if (!dateInput) return;
 
-    // Define data mínima como hoje (não permite agendar no passado)
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -73,18 +58,14 @@ function initDatePicker() {
     const minDateStr = `${yyyy}-${mm}-${dd}`;
     
     dateInput.min = minDateStr;
-    dateInput.value = minDateStr; // pré-seleciona hoje
+    dateInput.value = minDateStr;
 
-    // Ao mudar a data, recarrega horários e atualiza resumo
     dateInput.addEventListener("change", () => {
         initTimeSlots();
         updateSummary();
     });
 }
 
-/* ==========================================================================
-   3. GERADOR DINÂMICO DE HORÁRIOS DISPONÍVEIS
-   ========================================================================== */
 const AVAILABLE_TIMES = [
     "09:00", "09:45", "10:30", "11:15", 
     "13:00", "13:45", "14:30", "15:15", 
@@ -121,7 +102,6 @@ function initTimeSlots() {
             btn.disabled = true;
             btn.title = "Horário já passou";
         } else {
-            // Seleciona o primeiro horário válido por padrão
             if (!firstAvailableSet) {
                 btn.classList.add("selected");
                 hiddenInput.value = time;
@@ -142,14 +122,10 @@ function initTimeSlots() {
     updateSummary();
 }
 
-/* ==========================================================================
-   4. SINCRONIZAÇÃO DE CARDS COM FORMULÁRIO DE RESERVA
-   ========================================================================== */
 function initBookingSync() {
     const serviceSelect = document.getElementById("select-service");
     const barberSelect = document.getElementById("select-barber");
 
-    // Botões dos Cards de Barbeiros ("Escolher Carlos", etc.)
     document.querySelectorAll(".select-barber-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             const barberName = btn.getAttribute("data-barber");
@@ -167,7 +143,6 @@ function initBookingSync() {
         });
     });
 
-    // Botões dos Cards de Preço ("Agendar Este Serviço")
     document.querySelectorAll(".select-service-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
             const card = e.target.closest(".pricing-card");
@@ -207,7 +182,6 @@ function updateSummary() {
     const summaryDateTime = document.getElementById("summary-datetime");
     const summaryPrice = document.getElementById("summary-price");
 
-    // Atualiza Serviço e Preço
     if (serviceSelect && serviceSelect.selectedOptions[0]) {
         const selectedOpt = serviceSelect.selectedOptions[0];
         const price = selectedOpt.getAttribute("data-price") || "75.00";
@@ -215,12 +189,10 @@ function updateSummary() {
         if (summaryPrice) summaryPrice.textContent = `R$ ${parseFloat(price).toFixed(2).replace(".", ",")}`;
     }
 
-    // Atualiza Barbeiro
     if (barberSelect && summaryBarber) {
         summaryBarber.textContent = barberSelect.value;
     }
 
-    // Atualiza Data e Hora
     if (summaryDateTime) {
         const timeVal = hiddenTime && hiddenTime.value ? hiddenTime.value : "--:--";
         if (dateInput && dateInput.value) {
@@ -239,9 +211,6 @@ function scrollToSection(id) {
     }
 }
 
-/* ==========================================================================
-   5. ENVIO DO FORMULÁRIO E MODAL DE SUCESSO
-   ========================================================================== */
 function initBookingForm() {
     const form = document.getElementById("booking-form");
     const modal = document.getElementById("modal-success");
@@ -268,17 +237,14 @@ function initBookingForm() {
             return;
         }
 
-        // Formata data brasileira
         const [y, m, d] = dateRaw.split("-");
         const formattedDate = `${d}/${m}/${y}`;
         const bookingCode = `DN-${Math.floor(1000 + Math.random() * 9000)}`;
 
-        // Preço do serviço selecionado
         const serviceSelect = document.getElementById("select-service");
         const price = serviceSelect.selectedOptions[0]?.getAttribute("data-price") || "75.00";
         const formattedPrice = `R$ ${parseFloat(price).toFixed(2).replace(".", ",")}`;
 
-        // Dados do agendamento
         const bookingData = {
             codigo: bookingCode,
             cliente: clientName,
@@ -292,7 +258,6 @@ function initBookingForm() {
             observacoes: clientNotes
         };
 
-        // Envia para o backend se disponível
         try {
             await fetch("/api/agendamentos", {
                 method: "POST",
@@ -303,7 +268,6 @@ function initBookingForm() {
             console.warn("Backend API offline ou não configurado ainda. Agendamento processado localmente.", err);
         }
 
-        // Monta o comprovante no modal
         if (modalTicket) {
             modalTicket.innerHTML = `
                 <div class="ticket-line"><span>Código da Reserva:</span> <strong class="gold-text">${bookingCode}</strong></div>
@@ -316,7 +280,6 @@ function initBookingForm() {
             `;
         }
 
-        // Configura mensagem pré-formatada para o WhatsApp
         if (modalWhatsappBtn) {
             const whatsAppText = encodeURIComponent(
                 `💈 *CONFIRMAÇÃO DE AGENDAMENTO - DOM NAVALHA* 💈\n\n` +
@@ -334,7 +297,6 @@ function initBookingForm() {
             };
         }
 
-        // Abre o modal
         if (modal) {
             modal.classList.add("open");
         }
@@ -344,7 +306,6 @@ function initBookingForm() {
         initTimeSlots();
     });
 
-    // Fechar modal
     if (modalCloseBtn && modal) {
         modalCloseBtn.addEventListener("click", () => {
             modal.classList.remove("open");
@@ -357,9 +318,6 @@ function initBookingForm() {
     }
 }
 
-/* ==========================================================================
-   6. FAQ ACCORDION
-   ========================================================================== */
 function initFaqAccordion() {
     const faqItems = document.querySelectorAll(".faq-item");
 
@@ -371,14 +329,12 @@ function initFaqAccordion() {
             questionBtn.addEventListener("click", () => {
                 const isActive = item.classList.contains("active");
 
-                // Fecha outros
                 faqItems.forEach(other => {
                     other.classList.remove("active");
                     const otherAnswer = other.querySelector(".faq-answer");
                     if (otherAnswer) otherAnswer.style.maxHeight = null;
                 });
 
-                // Alterna o atual
                 if (!isActive) {
                     item.classList.add("active");
                     answer.style.maxHeight = answer.scrollHeight + "px";
@@ -388,9 +344,6 @@ function initFaqAccordion() {
     });
 }
 
-/* ==========================================================================
-   7. TOAST NOTIFICATION
-   ========================================================================== */
 function showToast(message) {
     const toast = document.getElementById("toast");
     if (!toast) return;
@@ -402,4 +355,3 @@ function showToast(message) {
         toast.classList.remove("show");
     }, 3200);
 }
-
